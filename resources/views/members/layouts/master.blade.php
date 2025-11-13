@@ -7,19 +7,16 @@
    @include('members.layouts.__footer')
 
    <script>
-      // Mobile navigation active state with expanding hover effect
       document.querySelectorAll(".expanding-nav-item").forEach((item) => {
         item.addEventListener("click", function (e) {
           const href = this.getAttribute("href");
           const targetAttr = this.getAttribute("target");
 
-          // Update active class (tetap lakukan ini)
           document.querySelectorAll(".expanding-nav-item").forEach((nav) => {
             nav.classList.remove("active");
           });
           this.classList.add("active");
 
-          // Deteksi kalau link eksternal atau seharusnya buka di tab baru
           const isExternal =
             href &&
             (href.startsWith("http://") ||
@@ -28,13 +25,10 @@
           const openInNewTab = targetAttr === "_blank";
 
           if (isExternal || openInNewTab) {
-            // jangan preventDefault: biarkan browser membuka link (atau membuka di tab baru jika _blank)
             return;
           }
 
-          // Sekarang tangani link internal / anchor
           if (!href || href === "#") {
-            // contoh: href="#" => scroll ke top (atau bisa diarahkan ke '/')
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
             return;
@@ -53,7 +47,6 @@
         });
       });
 
-      // Set active state based on scroll position
       window.addEventListener("scroll", () => {
         const sections = ["header", "anggota", "gallery"];
         const navItems = document.querySelectorAll(".expanding-nav-item");
@@ -74,10 +67,8 @@
         });
       });
 
-      // Initial active state
       document.querySelector(".expanding-nav-item").classList.add("active");
 
-      // Gallery scroll functionality
       const galleryContainer = document.getElementById("gallery-container");
       const scrollLeftBtn = document.getElementById("scroll-left");
       const scrollRightBtn = document.getElementById("scroll-right");
@@ -90,7 +81,6 @@
         galleryContainer.scrollBy({ left: -300, behavior: "smooth" });
       });
 
-      // Loop gallery when reaching end
       galleryContainer.addEventListener("scroll", () => {
         const { scrollLeft, scrollWidth, clientWidth } = galleryContainer;
 
@@ -101,7 +91,6 @@
         }
       });
 
-      // Show scroll buttons on hover
       const gallerySection = document.querySelector(".group");
       gallerySection.addEventListener("mouseenter", () => {
         scrollLeftBtn.classList.remove("hidden");

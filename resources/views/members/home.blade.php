@@ -1,9 +1,7 @@
 @extends('members.layouts.master')
 
 @section('content')
-    <!-- Main Content -->
     <div class="main-content">
-      <!-- Header Section -->
       <header class="pt-16 h-screen relative overflow-hidden">
         <div class="absolute inset-0 bg-purple-600/20 backdrop-blur-sm"></div>
         <div class="relative z-10 h-full flex items-center justify-center">
@@ -24,12 +22,9 @@
           </div>
         </div>
       </header>
-
-      <!-- Stats Section -->
       <section class="relative -mt-20 z-20 px-4">
         <div class="max-w-7xl mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Male Members Card -->
             <div
               class="glass-card rounded-2xl p-6 text-center transform hover:scale-105 transition duration-300"
             >
@@ -37,8 +32,6 @@
               <h3 class="text-xl font-bold text-white mb-2">Laki-laki</h3>
               <p class="text-3xl font-bold text-[#60a5fa]">12</p>
             </div>
-
-            <!-- Total Members Card -->
             <div
               class="glass-card rounded-2xl p-6 text-center transform hover:scale-105 transition duration-300"
             >
@@ -46,8 +39,6 @@
               <h3 class="text-xl font-bold text-white mb-2">Total</h3>
               <p class="text-3xl font-bold text-purple-400">25</p>
             </div>
-
-            <!-- Female Members Card -->
             <div
               class="glass-card rounded-2xl p-6 text-center transform hover:scale-105 transition duration-300"
             >
@@ -58,8 +49,6 @@
           </div>
         </div>
       </section>
-
-      <!-- Gallery Section -->
       <section id="gallery" class="py-16 px-4 mt-16">
         <div class="max-w-7xl mx-auto">
           <h2 class="text-3xl font-bold text-center mb-12 text-white">
@@ -154,8 +143,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Scroll buttons -->
             <button
               id="scroll-left"
               class="absolute left-0 top-1/2 transform -translate-y-1/2 glass-card rounded-full p-3 z-10 hidden group-hover:block"
@@ -175,8 +162,6 @@
           </div>
         </div>
       </section>
-
-      <!-- Teacher Section -->
       <section class="py-16 px-4">
         <div class="max-w-7xl mx-auto">
           <h2 class="text-3xl font-bold text-center mb-12 text-white">
@@ -240,8 +225,6 @@
           </div>
         </div>
       </section>
-
-      <!-- Members Section -->
       <section id="anggota" class="py-16 px-4">
         <div class="max-w-7xl mx-auto">
           <h2 class="text-3xl font-bold text-center mb-12 text-white">
