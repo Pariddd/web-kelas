@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Galery extends Model
+class Gallery extends Model
 {
     protected $fillable = [
         'title',
-        'file_name',
+        'image',
         'event',
     ];
 }
