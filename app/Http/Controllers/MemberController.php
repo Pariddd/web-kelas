@@ -175,14 +175,13 @@ class MemberController extends Controller
 
         if ($request->hasFile('avatar')) {
 
-            if ($member->avatar && file_exists(public_path('img_item_upload/' . $member->avatar))) {
+            if ($member->avatar && file_exists(public_path('avt_item_upload/' . $member->avatar))) {
                 unlink(public_path('avt_item_upload/' . $member->avatar));
             }
-
             $avatar = $request->file('avatar');
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
             $avatar->move(public_path('avt_item_upload'), $avatarName);
-            $validated['avatar'] = $avatarName;
+            $validatedData['avatar'] = $avatarName;
         }
 
         $member->update($validatedData);

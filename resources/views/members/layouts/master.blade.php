@@ -101,6 +101,46 @@
         scrollLeftBtn.classList.add("hidden");
         scrollRightBtn.classList.add("hidden");
       });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
+
+        if (!revealEls.length) return;
+
+        if (prefersReduced) {
+          // jika user reduce motion -> tampilkan semua tanpa animasi
+          revealEls.forEach(el => {
+            el.classList.remove('opacity-0', 'translate-y-6');
+            el.classList.add('opacity-100', 'translate-y-0');
+            el.style.transitionDelay = '';
+          });
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+
+            // baca delay dari attribute (expecting number in seconds, e.g. 0.08)
+            const delayAttr = el.dataset.revealDelay;
+            const delay = delayAttr ? parseFloat(delayAttr) : 0;
+
+            // apply delay and trigger animation
+            el.style.transitionDelay = `${delay}s`;
+            el.classList.remove('opacity-0', 'translate-y-6');
+            el.classList.add('opacity-100', 'translate-y-0');
+
+            // animate once: stop observing this element
+            obs.unobserve(el);
+          });
+        }, {
+          threshold: 0.12
+        });
+
+        revealEls.forEach(el => observer.observe(el));
+      });
     </script>
 </body>
 </html>
