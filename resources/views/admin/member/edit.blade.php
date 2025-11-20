@@ -1,19 +1,16 @@
 @extends('admin.layouts.master')
-@section('title', 'Gallery - update ')
+@section('title', 'Member - update ')
 @section('content')
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-      <a href="{{ route('gallery.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
+      <a href="{{ route('member.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
         <i class="fas fa-arrow-left"></i>
         Back
       </a>
     </div>
-
     <div class="mb-4">
       <h1 class="text-3xl font-bold">Create Data</h1>
     </div>
-
-
     @if ($errors->any())
       <div class="mb-6 p-4 rounded-lg bg-red-800 border border-red-700 text-red-100">
         <strong class="block mb-2">Fix errors:</strong>
@@ -25,7 +22,7 @@
       </div>
     @endif
 
-    <form id="edit-form" action="{{ route('gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data" class="bg-gray-800 rounded-xl shadow-lg p-6">
+    <form id="edit-form" action="{{ route('member.update', $member->id) }}" method="POST" enctype="multipart/form-data" class="bg-gray-800 rounded-xl shadow-lg p-6">
       @csrf
       @method('PUT')
 
@@ -33,9 +30,9 @@
         <div>
           <label class="block text-sm font-medium mb-2 text-gray-300">Image</label>
 
-          <div id="dropZone" tabindex="0" class="relative border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-blue-500 transition-colors bg-gray-700 min-h-64 flex flex-col items-center justify-center">
-            <input type="file" id="fileInput" name="image" class="hidden" accept="image/*" />
-            <div id="uploadContent" class="{{ $gallery->image ? 'hidden' : '' }} flex flex-col items-center">
+          <div id="dropZone" tabindex="0" class="relative border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-blue-500 transition-colors bg-gray-700 min-h-134 flex flex-col items-center justify-center">
+            <input type="file" id="fileInput" name="avatar" class="hidden" accept="image/*" />
+            <div id="uploadContent" class="{{ $member->avatar ? 'hidden' : '' }} flex flex-col items-center">
               <i class="fas fa-cloud-upload-alt text-4xl mb-4 text-gray-400"></i>
               <p class="text-gray-300 mb-2">Drag & drop to replace image</p>
               <p class="text-sm text-gray-400 mb-4">or</p>
@@ -43,14 +40,14 @@
               <p class="text-xs text-gray-500 mt-2">PNG, JPG, JPEG, WEBP — max 2MB</p>
             </div>
 
-            <div id="imagePreview" class="{{ $gallery->image ? '' : 'hidden' }} flex flex-col items-center">
-              @if ($gallery->image)
-                <img id="previewImg" class="max-h-48 max-w-full rounded-lg mb-4 object-cover" src="{{ asset('img_item_upload/' . $gallery->image) }}" alt="Current image" />
+            <div id="imagePreview" class="{{ $member->avatar ? '' : 'hidden' }} flex flex-col items-center">
+              @if ($member->avatar)
+                <img id="previewImg" class="max-h-48 max-w-full rounded-lg mb-4 object-cover" src="{{ asset('avt_item_upload/' . $member->avatar) }}" alt="Current Avatar" />
               @else
                 <img id="previewImg" class="max-h-48 max-w-full rounded-lg mb-4 object-cover" src="#" alt="Preview" />
               @endif
 
-              <p id="previewName" class="text-sm text-gray-300 mb-2">{{ $gallery->image ? $gallery->image : '' }}</p>
+              <p id="previewName" class="text-sm text-gray-300 mb-2">{{ $member->avatar ? $member->avatar : '' }}</p>
 
               <div class="flex">
 
@@ -62,20 +59,46 @@
               </div>
             </div>
 
-            @error('image') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
+            @error('avatar') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
           </div>
         </div>
         <div class="space-y-6">
           <div>
-            <label class="block text-sm font-medium mb-2 text-gray-300">Title</label>
-            <input name="title" type="text" value="{{ old('title', $gallery->title) }}" required
-                   class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
+            <label class="block text-sm font-medium mb-2 text-gray-300">Nama Lengkap</label>
+            <input name="name" type="text" value="{{ old('name', $member->name) }}" 
+                  class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
+            @error('name') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 text-gray-300">Nama Panggilan (optional)</label>
+            <input name="nickname" type="text" value="{{ old('nickname', $member->nickname) }}"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
+            @error('nickname') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-2 text-gray-300">Event (optional)</label>
-            <input name="event" type="text" value="{{ old('event', $gallery->event) }}"
-                   class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
+            <label class="block text-sm font-medium mb-2 text-gray-300">Role (optional)</label>
+            <input name="role" type="text" value="{{ old('role', $member->role) }}"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
+            @error('role') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2 text-gray-300">Gender</label>
+            <select name="gender"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors">
+              <option value="">-- Pilih gender --</option>
+              <option value="male" {{ old('gender', $member->gender) == 'male' ? 'selected' : '' }}>Laki-laki</option>
+              <option value="female" {{ old('gender', $member->gender) == 'female' ? 'selected' : '' }}>Perempuan</option>
+            </select>
+            @error('gender') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2 text-gray-300">Tanggal Lahir</label>
+            <input name="birth_date" type="date" value="{{ old('birth_date', $member->birth_date) }}"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
+            @error('birth_date') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
           </div>
 
           <div class="flex flex-wrap gap-3 pt-4">
@@ -83,12 +106,14 @@
               <i class="fas fa-save"></i> Save
             </button>
 
-            <a href="{{ route('gallery.index') }}" class="flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors">
+            <a href="{{ route('member.index') }}" class="flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors">
               <i class="fas fa-arrow-left"></i> Cancel
             </a>
           </div>
         </div>
+
       </div>
+      
     </form>
 
     <p class="mt-6 text-xs text-gray-400">You can replace the image by dragging a new one or clicking Replace.</p>

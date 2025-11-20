@@ -1,10 +1,10 @@
 <nav
-  class="desktop-nav bg-[#0F172A]/80 backdrop-blur-md fixed w-full z-50 top-0 border-b border-purple-500/30"
+  class="desktop-nav bg-slate-900/50 backdrop-blur-md fixed w-full z-50 top-0 border-b border-white/10"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
       <div class="flex items-center">
-        <span class="text-2xl font-bold">Anker People</span>
+        <span class="text-2xl font-bold">Angker People</span>
       </div>
 
       <div class="hidden md:flex items-center space-x-8">
@@ -20,7 +20,7 @@
         </a>
         <a
           href="#gallery"
-          class="font-medium hover:text-[#60a5fa]transition duration-300 flex items-center"
+          class="font-medium hover:text-[#60a5fa] transition duration-300 flex items-center"
         >
           Gallery
         </a>

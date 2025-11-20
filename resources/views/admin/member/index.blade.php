@@ -1,32 +1,34 @@
 @extends('admin.layouts.master')
-@section('title', 'Gallery')
+@section('title', 'Members')
 @section('content')
   <div class="flex-1 flex flex-col overflow-hidden">
     <header class="bg-[#1e293b] shadow-sm pl-6 p-3.5">
       <div class="flex justify-between items-center">
         <h2 class="text-xl font-semibold text-gray-100">
-          Gallery Management
+          Members Management
         </h2>
+
         <form id="filter-form" method="GET" class="flex items-center space-x-3">
           <input type="hidden" name="sort_by" id="sort_by" value="{{ $sortBy ?? 'created_at' }}">
           <input type="hidden" name="sort_dir" id="sort_dir" value="{{ $sortDir ?? 'desc' }}">
+
           <div class="relative">
             <input
               type="text"
               name="q"
               id="search-input"
               value="{{ $q ?? '' }}"
-              placeholder="Search by title or event..."
+              placeholder="Search by name or nickname..."
               class="bg-[#334155] rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-100"
             />
             <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
           </div>
 
           <div>
-            <select name="event" id="search-event" class="bg-[#334155] border border-[#334155] rounded-lg px-4 py-2 text-gray-100">
-              <option value="">All Events</option>
-              @foreach($eventsList as $ev)
-                <option value="{{ $ev }}" {{ ($ev === $event) ? 'selected' : '' }}>{{ $ev }}</option>
+            <select name="role" id="search-role" class="bg-[#334155] border border-[#334155] rounded-lg px-4 py-2 text-gray-100">
+              <option value="">All Roles</option>
+              @foreach($rolesList as $r)
+                <option value="{{ $r }}" {{ ($r === $role) ? 'selected' : '' }}>{{ $r }}</option>
               @endforeach
             </select>
           </div>
@@ -45,8 +47,9 @@
         </form>
       </div>
     </header>
+
     <main class="flex-1 overflow-y-auto p-6">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <a href="{{ route('gallery.index') }}" class="group block">
           <div class="p-4 bg-[#1e293b] rounded-lg shadow border border-[#334155]
                       transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
@@ -57,9 +60,8 @@
             <div>
               <p class="text-sm text-gray-300">Galleries</p>
               <p class="text-2xl font-semibold text-gray-100">{{ $galleryCount ?? 0 }}</p>
-              <p class="text-xs text-gray-400">Manage Galleries</p>
+              <p class="text-xs text-gray-400">View All Galleries</p>
             </div>
-
             <div class="ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
               <i class="fas fa-arrow-right text-gray-400"></i>
             </div>
@@ -72,56 +74,69 @@
             <div class="p-3 bg-[#334155] rounded-full transition-colors duration-300 group-hover:bg-green-600">
               <i class="fas fa-users text-2xl text-green-300 group-hover:text-white"></i>
             </div>
-
             <div>
               <p class="text-sm text-gray-300">Members</p>
               <p class="text-2xl font-semibold text-gray-100">{{ $memberCount ?? 0 }}</p>
-              <p class="text-xs text-gray-400">View All Members</p>
+              <p class="text-xs text-gray-400">Manage Members</p>
             </div>
-
             <div class="ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
               <i class="fas fa-arrow-right text-gray-400"></i>
             </div>
           </div>
         </a>
+        <div class="p-4 bg-[#1e293b] rounded-lg shadow border border-[#334155]
+                    transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
+                    hover:border-blue-400 flex items-center space-x-4">
+          <div class="p-3 bg-[#334155] rounded-full transition-colors duration-300 group-hover:bg-blue-600">
+            <i class="fas fa-male text-2xl text-blue-300 group-hover:text-white"></i>
+          </div>
+          <div>
+            <p class="text-sm text-gray-300">Male Members</p>
+            <p class="text-2xl font-semibold text-gray-100">{{ $maleCount ?? 0 }}</p>
+          </div>
+
+          <div class="ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
+            <i class="fas fa-arrow-right text-gray-400"></i>
+          </div>
+        </div>
+        <div class="p-4 bg-[#1e293b] rounded-lg shadow border border-[#334155]
+                    transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
+                    hover:border-pink-400 flex items-center space-x-4">
+          <div class="p-3 bg-[#334155] rounded-full transition-colors duration-300 group-hover:bg-pink-600">
+            <i class="fas fa-female text-2xl text-pink-300 group-hover:text-white"></i>
+          </div>
+          <div>
+            <p class="text-sm text-gray-300">Female Members</p>
+            <p class="text-2xl font-semibold text-gray-100">{{ $femaleCount ?? 0 }}</p>
+          </div>
+
+          <div class="ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
+            <i class="fas fa-arrow-right text-gray-400"></i>
+          </div>
+        </div>
       </div>
 
+
       <div class="mb-6 flex justify-between items-center">
-        <div class="flex space-x-4">
-        </div>
-        <a href="{{ route('gallery.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
-          <i class="fas fa-plus mr-2"></i> Create Data
+        <div class="flex space-x-4"></div>
+
+        <a href="{{ route('member.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+          <i class="fas fa-plus mr-2"></i> Create Member
         </a>
       </div>
+
       <div class="bg-[#1e293b] rounded-lg shadow overflow-hidden border border-[#334155]">
         <table class="min-w-full divide-y divide-[#334155]">
           <thead class="bg-[#334155]">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">No</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Avatar</th>
 
-              {{-- Title sortable --}}
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                <button type="button" id="th-title" class="flex items-center">
-                  Title
+                <button type="button" id="th-name" class="flex items-center">
+                  Name
                   <span class="ml-2 text-gray-400">
-                    @if($sortBy === 'title')
-                      @if($sortDir === 'asc')
-                        <i class="fas fa-sort-up"></i>
-                      @else
-                        <i class="fas fa-sort-down"></i>
-                      @endif
-                    @else
-                      <i class="fas fa-sort"></i>
-                    @endif
-                  </span>
-                </button>
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                <button type="button" id="th-event" class="flex items-center">
-                  Event
-                  <span class="ml-2 text-gray-400">
-                    @if($sortBy === 'event')
+                    @if($sortBy === 'name')
                       @if($sortDir === 'asc')
                         <i class="fas fa-sort-up"></i>
                       @else
@@ -134,31 +149,67 @@
                 </button>
               </th>
 
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <button type="button" id="th-nickname" class="flex items-center">
+                  Nickname
+                  <span class="ml-2 text-gray-400">
+                    @if($sortBy === 'nickname')
+                      @if($sortDir === 'asc')
+                        <i class="fas fa-sort-up"></i>
+                      @else
+                        <i class="fas fa-sort-down"></i>
+                      @endif
+                    @else
+                      <i class="fas fa-sort"></i>
+                    @endif
+                  </span>
+                </button>
+              </th>
+
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Gender</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Role</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Birthdate</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
 
           <tbody id="table-body" class="divide-y divide-[#334155]">
-            @forelse($galleries as $g)
+            @forelse($members as $m)
               <tr class="hover:bg-[#334155]">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $galleries->firstItem() + $loop->index }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $members->firstItem() + $loop->index }}</td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <img src="{{ asset('img_item_upload/' . $g->image) }}" alt="{{ $g->title }}" class="w-20 h-20 object-cover rounded">
+                  @if($m->avatar)
+                    <img src="{{ asset('avt_item_upload/' . $m->avatar) }}" alt="{{ $m->name }}" class="w-20 h-20 object-cover rounded">
+                  @else
+                    <img src="https://placehold.co/48x48/111827/ffffff?text=NA" alt="No avatar" class="w-12 h-12 object-cover rounded">
+                  @endif
                 </td>
 
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-100">{{ $g->title }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-100">{{ $m->name }}</td>
 
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $g->event ?? '-' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $m->nickname ?? '-' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $m->gender }}</td>
+
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $m->role ?? '-' }}</td>
+
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  @if(!empty($m->birth_date))
+                    {{ \Carbon\Carbon::parse($m->birth_date)->format('d M Y') }}
+                  @else
+                    -
+                  @endif
+                </td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div class="flex space-x-3">
-                    <a href="{{ route('gallery.edit', $g->id) }}" class="flex items-center px-3 py-1 rounded-lg bg-[#334155] text-green-300 hover:bg-[#475569] transition">
+                    <a href="{{ route('member.edit', $m->id) }}" class="flex items-center px-3 py-1 rounded-lg bg-[#334155] text-green-300 hover:bg-[#475569] transition">
                       <i class="fas fa-edit mr-1"></i><span>Edit</span>
                     </a>
+
                     <button type="button"
-                            data-id="{{ $g->id }}"
-                            data-title="{{ e($g->title) }}"
+                            data-id="{{ $m->id }}"
+                            data-title="{{ e($m->name) }}"
                             class="delete-btn flex items-center px-3 py-1 rounded-lg bg-[#334155] text-red-300 hover:bg-[#475569] transition">
                       <i class="fas fa-trash mr-1"></i><span>Delete</span>
                     </button>
@@ -167,22 +218,22 @@
               </tr>
             @empty
               <tr>
-                <td colspan="5" class="px-6 py-4 text-center text-gray-400">No records found.</td>
+                <td colspan="7" class="px-6 py-4 text-center text-gray-400">No records found.</td>
               </tr>
             @endforelse
           </tbody>
         </table>
       </div>
       <div id="delete-modal"
-      class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 items-center justify-center"
-      role="dialog"
-      aria-modal="true"
-      aria-hidden="true"
-      aria-labelledby="modal-title"
-      aria-describedby="modal-desc">
+           class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 items-center justify-center"
+           role="dialog"
+           aria-modal="true"
+           aria-hidden="true"
+           aria-labelledby="modal-title"
+           aria-describedby="modal-desc">
         <div id="delete-modal-panel"
-        class="bg-dark-800 rounded-lg p-6 transform opacity-0 scale-95 transition duration-200"
-        role="document">
+             class="bg-dark-800 rounded-lg p-6 transform opacity-0 scale-95 transition duration-200"
+             role="document">
           <div class="bg-[#1e293b] rounded-lg shadow-xl w-full max-w-lg p-6 border border-[#334155]">
             <div class="flex justify-between items-center mb-4">
               <h3 id="modal-title" class="text-lg font-semibold text-gray-100">Confirm Delete</h3>
@@ -191,9 +242,11 @@
                 <span class="sr-only">Close dialog</span>
               </button>
             </div>
+
             <p id="modal-desc" class="text-gray-300 mb-6">
               Are you sure you want to delete "<span id="modal-item-title" class="font-semibold text-gray-100"></span>"? This action cannot be undone.
             </p>
+
             <div class="flex justify-end space-x-3">
               <button id="cancel-delete" class="px-4 py-2 bg-[#334155] text-gray-200 rounded-md hover:bg-[#475569] focus:outline-none focus:ring-2 focus:ring-accent-500">Cancel</button>
 
@@ -207,30 +260,29 @@
         </div>
       </div>
 
-
-
       <div class="mt-4 flex flex-col md:flex-row md:justify-between md:items-center space-y-2 md:space-y-0">
         <div class="text-sm text-gray-300">
-          Showing <strong class="text-gray-100">{{ $galleries->firstItem() ?? 0 }}</strong> to <strong class="text-gray-100">{{ $galleries->lastItem() ?? 0 }}</strong> of <strong class="text-gray-100">{{ $galleries->total() }}</strong> entries
+          Showing <strong class="text-gray-100">{{ $members->firstItem() ?? 0 }}</strong> to <strong class="text-gray-100">{{ $members->lastItem() ?? 0 }}</strong> of <strong class="text-gray-100">{{ $members->total() }}</strong> entries
         </div>
 
         <div>
-          {{ $galleries->appends(request()->except('page'))->links() }}
+          {{ $members->appends(request()->except('page'))->links() }}
         </div>
       </div>
     </main>
   </div>
 @endsection
+
 @section('script')
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       (function(){
         const filterForm = document.getElementById('filter-form');
         const qInput = document.getElementById('search-input');
-        const eventSelect = document.getElementById('search-event');
+        const roleSelect = document.getElementById('search-role');
         const perPageSelect = document.getElementById('items-per-page');
-        const thTitle = document.getElementById('th-title');
-        const thEvent = document.getElementById('th-event');
+        const thName = document.getElementById('th-name');
+        const thNickname = document.getElementById('th-nickname');
         const sortByInput = document.getElementById('sort_by');
         const sortDirInput = document.getElementById('sort_dir');
 
@@ -257,8 +309,8 @@
           });
         }
 
-        if (eventSelect) {
-          eventSelect.addEventListener('change', function(){
+        if (roleSelect) {
+          roleSelect.addEventListener('change', function(){
             filterForm.submit();
           });
         }
@@ -281,8 +333,8 @@
           filterForm.submit();
         }
 
-        if (thTitle) thTitle.addEventListener('click', ()=> toggleSort('title'));
-        if (thEvent) thEvent.addEventListener('click', ()=> toggleSort('event'));
+        if (thName) thName.addEventListener('click', ()=> toggleSort('name'));
+        if (thNickname) thNickname.addEventListener('click', ()=> toggleSort('nickname'));
       })();
 
       (function(){
@@ -300,8 +352,9 @@
         let lastFocusedElement = null;
 
         function openModal(id, title) {
+          // set form action & title
           modalTitleEl && (modalTitleEl.textContent = title || 'this item');
-          deleteForm.action = "{{ url('gallery') }}/" + id;
+          deleteForm.action = "{{ url('member') }}/" + id;
 
           modal.classList.remove('hidden');
           modal.classList.add('flex');
@@ -389,12 +442,12 @@
             e.preventDefault();
             return;
           }
-          if (e.shiftKey) {
+          if (e.shiftKey) { 
             if (document.activeElement === firstFocusable) {
               e.preventDefault();
               lastFocusable.focus();
             }
-          } else {
+          } else { 
             if (document.activeElement === lastFocusable) {
               e.preventDefault();
               firstFocusable.focus();
@@ -406,4 +459,3 @@
     });
   </script>
 @endsection
-  

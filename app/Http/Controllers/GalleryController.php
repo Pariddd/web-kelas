@@ -14,20 +14,17 @@ class GalleryController extends Controller
      */
     public function index(Request $request)
     {
-        // Query params (with defaults)
         $q = (string) $request->query('q', '');
         $event = (string) $request->query('event', '');
         $sortBy = (string) $request->query('sort_by', 'created_at');
         $sortDir = (string) $request->query('sort_dir', 'desc');
         $perPage = (int) $request->query('per_page', 10);
 
-        // sanitize perPage — allow only specific options
         $allowedPerPage = [5, 10, 20, 50];
         if (! in_array($perPage, $allowedPerPage, true)) {
             $perPage = 10;
         }
 
-        // allowed sort columns to avoid SQL injection
         $allowedSorts = ['title', 'event', 'created_at'];
         if (! in_array($sortBy, $allowedSorts, true)) {
             $sortBy = 'created_at';
@@ -35,7 +32,6 @@ class GalleryController extends Controller
 
         $sortDir = strtolower($sortDir) === 'asc' ? 'asc' : 'desc';
 
-        // Build query
         $query = Gallery::query();
 
         if ($q !== '') {
@@ -49,28 +45,21 @@ class GalleryController extends Controller
             $query->where('event', $event);
         }
 
-        // You can eager load relations here if you have them, e.g. ->with('user')
-
-        // Order and paginate
         $galleries = $query->orderBy($sortBy, $sortDir)
             ->paginate($perPage)
-            ->withQueryString(); // keep q,event,sort_by,... on links
+            ->withQueryString();
 
-        // For the cards: counts
         $galleryCount = Gallery::count();
 
-        // if you have a Member model, replace this.
         $memberCount = 0;
         try {
             if (class_exists(\App\Models\Member::class)) {
                 $memberCount = \App\Models\Member::count();
             }
         } catch (\Throwable $e) {
-            // fail safe: don't break page if member model missing
             Log::debug('Member count skipped: ' . $e->getMessage());
         }
 
-        // Distinct event list for the event filter dropdown
         $eventsList = Gallery::whereNotNull('event')
             ->where('event', '!=', '')
             ->select('event')
@@ -78,7 +67,6 @@ class GalleryController extends Controller
             ->orderBy('event')
             ->pluck('event');
 
-        // Pass variables expected by the Blade view
         return view('admin.gallery.index', [
             'galleries'    => $galleries,
             'eventsList'   => $eventsList,
@@ -162,7 +150,6 @@ class GalleryController extends Controller
 
         if ($request->hasFile('image')) {
 
-            // Delete old image
             if ($gallery->image && file_exists(public_path('img_item_upload/' . $gallery->image))) {
                 unlink(public_path('img_item_upload/' . $gallery->image));
             }
@@ -183,6 +170,11 @@ class GalleryController extends Controller
      */
     public function destroy(Gallery $gallery)
     {
+
+        if ($gallery->image && file_exists(public_path('img_item_upload/' . $gallery->image))) {
+            unlink(public_path('img_item_upload/' . $gallery->image));
+        }
+
         $gallery->delete();
 
         return redirect()->route('gallery.index')

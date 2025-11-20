@@ -11,6 +11,7 @@ class Member extends Model
         'nickname',
         'role',
         'avatar',
+        'gender',
         'birth_date',
     ];
 }

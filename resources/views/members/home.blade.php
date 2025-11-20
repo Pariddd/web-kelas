@@ -3,25 +3,29 @@
 @section('content')
     <div class="main-content">
       <header class="pt-16 h-screen relative overflow-hidden">
-        <div class="absolute inset-0 bg-purple-600/20 backdrop-blur-sm"></div>
-        <div class="relative z-10 h-full flex items-center justify-center">
-          <img
-            src="https://placehold.co/1200x400/7e22ce/ffffff?text=Anker+People+Cover"
-            alt="Cover"
-            class="absolute inset-0 w-full h-full object-cover opacity-30"
-          />
-          <div class="relative z-10 text-center px-4">
-            <p class="text-xl md:text-3xl font-bold">Hi, Visitor!</p>
-            <h1
-              class="text-4xl md:text-7xl font-bold text-[#60a5fa] tracking-wide"
-            >
-              WELCOME
-            </h1>
 
-            <p class="text-xl">to anker people</p>
-          </div>
-        </div>
-      </header>
+  <!-- Gambar Cover -->
+  <img
+    src="{{ asset('assets/members/img/hero.jpg') }}"
+    alt="Cover"
+    class="absolute inset-0 w-full h-full object-cover opacity-20"
+  />
+
+  <!-- Overlay tambahan agar gambar lebih redup -->
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="relative z-10 h-full flex items-center justify-center">
+    <div class="text-center px-4">
+      <p class="text-xl md:text-3xl font-bold">Hi, Visitor!</p>
+      <h1 class="text-4xl md:text-7xl font-bold text-[#60a5fa] tracking-wide">
+        WELCOME
+      </h1>
+      <p class="text-xl">to MIPA 2</p>
+    </div>
+  </div>
+
+</header>
+
       <section class="relative -mt-20 z-20 px-4">
         <div class="max-w-7xl mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -30,21 +34,21 @@
             >
               <i class="fas fa-mars text-4xl text-[#60a5fa] mb-4"></i>
               <h3 class="text-xl font-bold text-white mb-2">Laki-laki</h3>
-              <p class="text-3xl font-bold text-[#60a5fa]">12</p>
+              <p class="text-3xl font-bold text-[#60a5fa]">7</p>
             </div>
             <div
               class="glass-card rounded-2xl p-6 text-center transform hover:scale-105 transition duration-300"
             >
               <i class="fas fa-users text-4xl text-purple-400 mb-4"></i>
               <h3 class="text-xl font-bold text-white mb-2">Total</h3>
-              <p class="text-3xl font-bold text-purple-400">25</p>
+              <p class="text-3xl font-bold text-purple-400">29</p>
             </div>
             <div
               class="glass-card rounded-2xl p-6 text-center transform hover:scale-105 transition duration-300"
             >
               <i class="fas fa-venus text-4xl text-pink-400 mb-4"></i>
               <h3 class="text-xl font-bold text-white mb-2">Perempuan</h3>
-              <p class="text-3xl font-bold text-pink-400">13</p>
+              <p class="text-3xl font-bold text-pink-400">22</p>
             </div>
           </div>
         </div>

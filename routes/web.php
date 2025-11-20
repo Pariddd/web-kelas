@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MemberController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,3 +13,4 @@ Route::get('/home', function () {
 });
 
 Route::resource('gallery', GalleryController::class);
+Route::resource('member', MemberController::class);
