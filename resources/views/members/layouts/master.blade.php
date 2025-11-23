@@ -69,39 +69,6 @@
 
       document.querySelector(".expanding-nav-item").classList.add("active");
 
-      const galleryContainer = document.getElementById("gallery-container");
-      const scrollLeftBtn = document.getElementById("scroll-left");
-      const scrollRightBtn = document.getElementById("scroll-right");
-
-      scrollRightBtn.addEventListener("click", () => {
-        galleryContainer.scrollBy({ left: 300, behavior: "smooth" });
-      });
-
-      scrollLeftBtn.addEventListener("click", () => {
-        galleryContainer.scrollBy({ left: -300, behavior: "smooth" });
-      });
-
-      galleryContainer.addEventListener("scroll", () => {
-        const { scrollLeft, scrollWidth, clientWidth } = galleryContainer;
-
-        if (scrollLeft + clientWidth >= scrollWidth - 10) {
-          setTimeout(() => {
-            galleryContainer.scrollTo({ left: 0, behavior: "smooth" });
-          }, 1000);
-        }
-      });
-
-      const gallerySection = document.querySelector(".group");
-      gallerySection.addEventListener("mouseenter", () => {
-        scrollLeftBtn.classList.remove("hidden");
-        scrollRightBtn.classList.remove("hidden");
-      });
-
-      gallerySection.addEventListener("mouseleave", () => {
-        scrollLeftBtn.classList.add("hidden");
-        scrollRightBtn.classList.add("hidden");
-      });
-
       document.addEventListener('DOMContentLoaded', function () {
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
@@ -109,7 +76,6 @@
         if (!revealEls.length) return;
 
         if (prefersReduced) {
-          // jika user reduce motion -> tampilkan semua tanpa animasi
           revealEls.forEach(el => {
             el.classList.remove('opacity-0', 'translate-y-6');
             el.classList.add('opacity-100', 'translate-y-0');
@@ -123,16 +89,13 @@
             if (!entry.isIntersecting) return;
             const el = entry.target;
 
-            // baca delay dari attribute (expecting number in seconds, e.g. 0.08)
             const delayAttr = el.dataset.revealDelay;
             const delay = delayAttr ? parseFloat(delayAttr) : 0;
 
-            // apply delay and trigger animation
             el.style.transitionDelay = `${delay}s`;
             el.classList.remove('opacity-0', 'translate-y-6');
             el.classList.add('opacity-100', 'translate-y-0');
 
-            // animate once: stop observing this element
             obs.unobserve(el);
           });
         }, {
@@ -141,6 +104,19 @@
 
         revealEls.forEach(el => observer.observe(el));
       });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('opacity-0', 'translate-y-10');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      document.querySelectorAll('.scroll-fade-up').forEach(el => observer.observe(el));
+
+
     </script>
 </body>
 </html>

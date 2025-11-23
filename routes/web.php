@@ -5,9 +5,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/home');
 
 Route::get('/home', [HomeController::class, 'index'])->name('members.home');
 

@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index()
     {
         $galleries = Gallery::orderBy('created_at', 'asc')
-            ->take(5)
+            ->take(6)
             ->get();
 
         $members = Member::where('role', '!=', 'guru')
@@ -22,13 +22,13 @@ class HomeController extends Controller
         $memberCount = Member::count();
         $male   = Member::where('gender', 'male')->count();
         $femaleCount = Member::where('gender', 'female')->count();
-        $nonGuruCount = Member::where('role', '!=', 'guru')->orWhereNull('role')->count();
+        $GuruCount = Member::where('role', '=', 'guru')->orWhereNull('role')->count();
         $teachers = Member::where('role', 'guru')
             ->orderBy('name', 'asc')
             ->get();
 
-        $member = $memberCount - $nonGuruCount;
-        $female = $femaleCount - $nonGuruCount;
+        $member = $memberCount - $GuruCount;
+        $female = $femaleCount - $GuruCount;
 
         return view('members.home', [
             'galleries' => $galleries,
