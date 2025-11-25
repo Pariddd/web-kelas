@@ -61,25 +61,44 @@
           </div>
         @endforeach
       </div>
+      <div class="grid gap-4 lg:hidden transition duration-1000 scroll-fade-up opacity-0 translate-y-10">
+        @if($galleries->isEmpty())
+          <div class="w-full h-64 overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center ">
+            <img id="mainImage"
+              class="w-full h-full object-cover"
+              src="https://placehold.co/600x600/EC4899/ffffff?text=Gallery"
+              alt="No gallery">
+          </div>
 
-      <div class="max-w-md mx-auto lg:hidden">
-        <div class="grid grid-cols-3 gap-2">
-            @foreach ($galleries as $gallery)
-            <div class="bg-white rounded-xl overflow-hidden shadow-sm aspect-square 
-                        photo-card opacity-0 translate-y-10 transition-all duration-700 hover:scale-105 scroll-fade-up">
-                <img 
-                    src="{{ $gallery->image ? asset('img_item_upload/' . $gallery->image) : 'https://placehold.co/150x150/cccccc/ffffff?text=No+Image' }}" 
-                    alt="Gallery Image" 
-                    class="w-full h-full object-cover"
-                >
-            </div>
+          <div class="grid grid-cols-5 gap-4">
+            @for($i=0;$i<5;$i++)
+              <div class="overflow-hidden rounded-lg ">
+                <img class="w-full h-20 object-cover"
+                  src="https://placehold.co/300x300/EC4899/ffffff?text=Gallery"
+                  alt="placeholder">
+              </div>
+            @endfor
+          </div>
+        @else
+          <div class="w-full h-64 overflow-hidden rounded-lg bg-gray-100">
+            <img id="mainImage"
+              class="w-full h-full object-cover"
+              src="{{ $galleries[0]->image ? asset('img_item_upload/' . $galleries[0]->image) : 'https://placehold.co/600x600/EC4899/ffffff?text=Gallery' }}"
+              alt="Main Image">
+          </div>
+          <div class="grid grid-cols-5 gap-4">
+            @foreach ($galleries as $index => $gallery)
+              <div class="overflow-hidden rounded-lg">
+                <img
+                  data-index="{{ $index }}"
+                  class="thumbnail-img w-full h-20 object-cover cursor-pointer transition-transform duration-150"
+                  src="{{ $gallery->image ? asset('img_item_upload/' . $gallery->image) : 'https://placehold.co/300x300/EC4899/ffffff?text=Gallery' }}"
+                  alt="Thumbnail {{ $index + 1 }}">
+              </div>
             @endforeach
-        </div>
+          </div>
+        @endif
       </div>
-
-
-
-
       <div class="flex justify-center mt-12 mb-16">
         <a href="#"
           class="flex items-center justify-center
@@ -90,7 +109,7 @@
                   before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 
                   before:h-full before:w-0 before:transition-all before:duration-500
                   hover:text-white hover:shadow-[#60a5fa] hover:before:left-0 hover:before:w-full">
-            <span class="relative z-10">Swipe</span>
+            <span class="relative z-10">Open Gallery</span>
         </a>
       </div>
       <section class="py-16 px-4">

@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index()
     {
         $galleries = Gallery::orderBy('created_at', 'asc')
-            ->take(6)
+            ->take(5)
             ->get();
 
         $members = Member::where('role', '!=', 'guru')
