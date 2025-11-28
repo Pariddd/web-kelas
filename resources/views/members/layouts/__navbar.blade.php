@@ -7,7 +7,7 @@
         <span class="text-2xl font-bold">Angker People</span>
       </div>
 
-      <div class="hidden md:flex items-center space-x-8">
+      <div class="hidden sm:flex items-center space-x-8">
         <a
           href="#"
           class="text-white font-medium hover:text-[#60a5fa] transition duration-300 flex items-center"
