@@ -47,45 +47,61 @@
       });
     })();
 
-    document.querySelectorAll(".expanding-nav-item").forEach((item) => {
-      item.addEventListener("click", function (e) {
-        const href = this.getAttribute("href");
-        const targetAttr = this.getAttribute("target");
+    // document.querySelectorAll(".expanding-nav-item").forEach((item) => {
+    //   item.addEventListener("click", function (e) {
+    //     const href = this.getAttribute("href");
+    //     const targetAttr = this.getAttribute("target");
 
-        document.querySelectorAll(".expanding-nav-item").forEach((nav) => {
-          nav.classList.remove("active");
-        });
-        this.classList.add("active");
+    //     document.querySelectorAll(".expanding-nav-item").forEach((nav) => {
+    //       nav.classList.remove("active");
+    //     });
+    //     this.classList.add("active");
 
-        const isExternal =
-          href &&
-          (href.startsWith("http://") ||
-            href.startsWith("https://") ||
-            href.startsWith("mailto:"));
-        const openInNewTab = targetAttr === "_blank";
+    //     const isExternal =
+    //       href &&
+    //       (href.startsWith("http://") ||
+    //         href.startsWith("https://") ||
+    //         href.startsWith("mailto:"));
+    //     const openInNewTab = targetAttr === "_blank";
 
-        if (isExternal || openInNewTab) {
-          return;
+    //     if (isExternal || openInNewTab) {
+    //       return;
+    //     }
+
+    //     if (!href || href === "#") {
+    //       e.preventDefault();
+    //       window.scrollTo({ top: 0, behavior: "smooth" });
+    //       return;
+    //     }
+
+    //     if (href.startsWith("#")) {
+    //       const target = document.querySelector(href);
+    //       if (target) {
+    //         e.preventDefault();
+    //         window.scrollTo({
+    //           top: target.offsetTop - 80,
+    //           behavior: "smooth",
+    //         });
+    //       }
+    //     }
+    //   });
+    // });
+    // document.querySelector(".expanding-nav-item").classList.add("active");
+document.addEventListener("DOMContentLoaded", () => {
+    const hash = window.location.hash;
+
+    if (hash === "#anggota") {
+        const navItem = document.querySelector('.expanding-nav-item[href$="#anggota"]');
+        if (navItem) {
+            document
+                .querySelectorAll('.expanding-nav-item')
+                .forEach(item => item.classList.remove("active"));
+
+            navItem.classList.add("active");
         }
+    }
+});
 
-        if (!href || href === "#") {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-          return;
-        }
-
-        if (href.startsWith("#")) {
-          const target = document.querySelector(href);
-          if (target) {
-            e.preventDefault();
-            window.scrollTo({
-              top: target.offsetTop - 80,
-              behavior: "smooth",
-            });
-          }
-        }
-      });
-    });
 
     window.addEventListener("scroll", () => {
       const sections = ["header", "anggota", "gallery"];
@@ -107,7 +123,6 @@
       });
     });
 
-    document.querySelector(".expanding-nav-item").classList.add("active");
 
     document.addEventListener('DOMContentLoaded', function () {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
