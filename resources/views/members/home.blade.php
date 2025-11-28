@@ -100,7 +100,7 @@
         @endif
       </div>
       <div class="flex justify-center mt-12 mb-16">
-        <a href="#"
+        <a href="{{ route('gallery.index') }}"
           class="flex items-center justify-center
                   text-[#60a5fa] hover:before:bg-[#60a5fa] border-[#60a5fa]
                   relative h-[50px] w-40 overflow-hidden 

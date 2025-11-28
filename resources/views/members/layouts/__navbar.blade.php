@@ -9,17 +9,15 @@
 
       <div class="hidden sm:flex items-center space-x-8">
         <a
-          href="#"
+          href="{{ route('members.home') }}"
           class="text-white font-medium hover:text-[#60a5fa] transition duration-300 flex items-center"
           >Home
         </a>
-        <a
-          href="#anggota"
-          class="font-medium hover:text-[#60a5fa] transition duration-300 flex items-center"
-          >Anggota
+        <a href="{{ request()->is('gallery*') ? route('members.home') . '#anggota' : '#anggota' }}" class="font-medium hover:text-[#60a5fa] transition duration-300 flex items-center">
+            Anggota
         </a>
         <a
-          href="#gallery"
+          href="{{ route('gallery.index') }}"
           class="font-medium hover:text-[#60a5fa] transition duration-300 flex items-center"
         >
           Gallery
@@ -28,7 +26,7 @@
           href="https://github.com"
           target="_blank"
           class="hover:text-[#60a5fa] transition duration-300 flex items-center"
-          >Github
+          >Contact
         </a>
       </div>
     </div>
@@ -36,20 +34,20 @@
 </nav>
 
 <nav class="expanding-mobile-nav">
-  <a href="#" class="expanding-nav-item active">
+  <a href="{{ route('members.home') }}" class="expanding-nav-item active">
     <i class="fas fa-home"></i>
     <span>Home</span>
   </a>
-  <a href="#anggota" class="expanding-nav-item">
+  <a href="{{ request()->is('gallery*') ? route('members.home') . '#anggota' : '#anggota' }}" class="expanding-nav-item">
     <i class="fas fa-users"></i>
     <span>Anggota</span>
   </a>
-  <a href="#gallery" class="expanding-nav-item">
+  <a href="{{ route('gallery.index') }}" class="expanding-nav-item">
     <i class="fas fa-images"></i>
     <span>Gallery</span>
   </a>
   <a href="https://github.com" target="_blank" class="expanding-nav-item">
     <i class="fab fa-github"></i>
-    <span>Github</span>
+    <span>Contact</span>
   </a>
 </nav>

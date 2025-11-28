@@ -9,7 +9,7 @@ use App\Http\Controllers\MemberController;
 Route::redirect('/', '/home');
 
 Route::get('/home', [HomeController::class, 'index'])->name('members.home');
-Route::get('/gallery', [HomeGalleryController::class, 'index'])->name('gallery.home');
+Route::get('/gallery', [HomeGalleryController::class, 'index'])->name('gallery.index');
 Route::get('/gallery-data', [HomeGalleryController::class, 'data'])->name('gallery.data');
 
 Route::resource('admin/gallery', GalleryController::class)->names('galleries');
