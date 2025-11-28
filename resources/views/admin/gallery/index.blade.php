@@ -47,7 +47,7 @@
     </header>
     <main class="flex-1 overflow-y-auto p-6">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">
-        <a href="{{ route('gallery.index') }}" class="group block">
+        <a href="{{ route('galleries.index') }}" class="group block">
           <div class="p-4 bg-[#1e293b] rounded-lg shadow border border-[#334155]
                       transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
                       hover:border-blue-400 flex items-center space-x-4">
@@ -89,7 +89,7 @@
       <div class="mb-6 flex justify-between items-center">
         <div class="flex space-x-4">
         </div>
-        <a href="{{ route('gallery.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="{{ route('galleries.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-plus mr-2"></i> Create Data
         </a>
       </div>
@@ -153,7 +153,7 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div class="flex space-x-3">
-                    <a href="{{ route('gallery.edit', $g->id) }}" class="flex items-center px-3 py-1 rounded-lg bg-[#334155] text-green-300 hover:bg-[#475569] transition">
+                    <a href="{{ route('galleries.edit', $g->id) }}" class="flex items-center px-3 py-1 rounded-lg bg-[#334155] text-green-300 hover:bg-[#475569] transition">
                       <i class="fas fa-edit mr-1"></i><span>Edit</span>
                     </a>
                     <button type="button"

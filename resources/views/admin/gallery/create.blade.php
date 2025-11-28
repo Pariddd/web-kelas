@@ -3,7 +3,7 @@
 @section('content')
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-      <a href="{{ route('gallery.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
+      <a href="{{ route('galleries.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
         <i class="fas fa-arrow-left"></i>
         Back
       </a>
@@ -24,7 +24,7 @@
       </div>
     @endif
 
-    <form id="create-form" action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data" class="bg-gray-800 rounded-xl shadow-lg p-6">
+    <form id="create-form" action="{{ route('galleries.store') }}" method="POST" enctype="multipart/form-data" class="bg-gray-800 rounded-xl shadow-lg p-6">
       @csrf
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -50,7 +50,7 @@
 
     <main class="flex-1 overflow-y-auto p-6">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <a href="{{ route('gallery.index') }}" class="group block">
+        <a href="{{ route('galleries.index') }}" class="group block">
           <div class="p-4 bg-[#1e293b] rounded-lg shadow border border-[#334155]
                       transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
                       hover:border-blue-400 flex items-center space-x-4">
