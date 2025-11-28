@@ -10,5 +10,6 @@ class Gallery extends Model
         'title',
         'image',
         'event',
+        'date',
     ];
 }

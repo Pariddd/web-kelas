@@ -77,6 +77,12 @@
             <input name="event" type="text" value="{{ old('event', $gallery->event) }}"
                    class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
           </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 text-gray-300">Tanggal</label>
+            <input name="date" type="date" value="{{ old('date', $gallery->date) }}"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-colors" />
+            @error('date') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
+          </div>
 
           <div class="flex flex-wrap gap-3 pt-4">
             <button type="submit" class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">

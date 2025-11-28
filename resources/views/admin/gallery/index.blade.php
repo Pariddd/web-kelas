@@ -133,6 +133,22 @@
                   </span>
                 </button>
               </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <button type="button" id="th-date" class="flex items-center">
+                  Date
+                  <span class="ml-2 text-gray-400">
+                    @if($sortBy === 'date')
+                      @if($sortDir === 'asc')
+                        <i class="fas fa-sort-up"></i>
+                      @else
+                        <i class="fas fa-sort-down"></i>
+                      @endif
+                    @else
+                      <i class="fas fa-sort"></i>
+                    @endif
+                  </span>
+                </button>
+              </th>
 
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
             </tr>
@@ -150,6 +166,7 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-100">{{ $g->title }}</td>
 
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $g->event ?? '-' }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $g->date ?? '-' }}</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div class="flex space-x-3">
@@ -231,6 +248,7 @@
         const perPageSelect = document.getElementById('items-per-page');
         const thTitle = document.getElementById('th-title');
         const thEvent = document.getElementById('th-event');
+        const thDate = document.getElementById('th-date');
         const sortByInput = document.getElementById('sort_by');
         const sortDirInput = document.getElementById('sort_dir');
 
@@ -283,6 +301,7 @@
 
         if (thTitle) thTitle.addEventListener('click', ()=> toggleSort('title'));
         if (thEvent) thEvent.addEventListener('click', ()=> toggleSort('event'));
+        if (thDate) thDate.addEventListener('click', ()=> toggleSort('date'));
       })();
 
       (function(){

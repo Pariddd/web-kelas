@@ -97,15 +97,23 @@ class GalleryController extends Controller
             [
                 'title' => 'required|string|max:255',
                 'event' => 'nullable|string|max:100',
-                'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+                'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048', // 2MB
+                'date'  => 'nullable|date',
             ],
             [
-                'title.required' => 'The image name is required.',
-                'event.string' => 'The event must be a string.',
-                'image.image' => 'The image must be an image file.',
-                'image.max' => 'The image size must not exceed 2MB.',
+                'title.required' => 'Field title wajib diisi.',
+                'title.string'   => 'Field title harus berupa teks.',
+                'title.max'      => 'Field title tidak boleh lebih dari 255 karakter.',
+                'event.string' => 'Field event harus berupa teks.',
+                'event.max'    => 'Field event tidak boleh lebih dari 100 karakter.',
+                'image.required' => 'Field image wajib diisi.',
+                'image.image'    => 'Field image harus berupa file gambar.',
+                'image.mimes'    => 'File image harus bertipe: jpg, jpeg, png, atau webp.',
+                'image.max'      => 'Ukuran file image tidak boleh lebih dari 2MB.',
+                'date.date' => 'Field date tidak valid.',
             ]
         );
+
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -116,7 +124,7 @@ class GalleryController extends Controller
 
         $gallery = Gallery::create($validatedData);
 
-        return redirect()->route('gallery.index')->with('success', 'Item created successfully.');
+        return redirect()->route('galleries.index')->with('success', 'Item created successfully.');
     }
 
     /**
@@ -145,8 +153,20 @@ class GalleryController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'event' => 'nullable|string|max:100',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'date'  => 'nullable|date',
+        ], [
+            'title.required' => 'Field title wajib diisi.',
+            'title.string'   => 'Field title harus berupa teks.',
+            'title.max'      => 'Field title tidak boleh lebih dari 255 karakter.',
+            'event.string' => 'Field event harus berupa teks.',
+            'event.max'    => 'Field event tidak boleh lebih dari 100 karakter.',
+            'image.image' => 'Field image harus berupa file gambar.',
+            'image.mimes' => 'File image harus bertipe: jpg, jpeg, png, atau webp.',
+            'image.max'   => 'Ukuran file image tidak boleh lebih dari 2MB.',
+            'date.date' => 'Field date tidak valid.',
         ]);
+
 
         if ($request->hasFile('image')) {
 
@@ -162,7 +182,7 @@ class GalleryController extends Controller
 
         $gallery->update($validated);
 
-        return redirect()->route('gallery.index')->with('success', 'Updated!');
+        return redirect()->route('galleries.index')->with('success', 'Updated!');
     }
 
     /**
@@ -177,7 +197,7 @@ class GalleryController extends Controller
 
         $gallery->delete();
 
-        return redirect()->route('gallery.index')
+        return redirect()->route('galleries.index')
             ->with('success', 'Gallery item deleted successfully.');
     }
 }

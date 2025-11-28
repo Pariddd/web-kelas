@@ -72,6 +72,13 @@
               placeholder="Enter event (optional)"/>
             @error('event') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
           </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 text-gray-300">Date</label>
+            <input name="date" id="dateInput" type="date" value="{{ old('date') }}"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                   placeholder="YYYY-MM-DD">
+            @error('date') <p class="mt-2 text-sm text-red-400">{{ $message }}</p> @enderror
+          </div>
 
           <div class="flex flex-wrap gap-3 pt-4">
             <button id="submitBtn" type="submit" class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
@@ -183,6 +190,7 @@
       clearBtn.addEventListener('click', () => {
         document.getElementById('titleInput').value = '';
         document.getElementById('eventInput').value = '';
+        document.getElementById('dateInput').value = '';
         fileInput.value = '';
         uploadContent.classList.remove('hidden');
         imagePreview.classList.add('hidden');
