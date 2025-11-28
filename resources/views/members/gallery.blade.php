@@ -6,7 +6,7 @@
     <h2 class="text-3xl font-bold text-white mb-8 md:mt-12 ">Gallery</h2>
 
     <div class="flex flex-wrap gap-3 items-center mb-8 sticky top-0 bg-gray-900/95 backdrop-blur-sm z-10 py-4 -mx-4 px-4">
-      <select id="filter-year" class="px-4 py-2.5 bg-gray-800 text-white rounded-xl border border-gray-700 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+      <select id="filter-year" class="px-4 py-2.5 bg-gray-800 text-white rounded-xl border border-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all">
         <option value="">All Years</option>
         @foreach($years as $y)
           <option value="{{ $y }}">{{ $y }}</option>
@@ -14,7 +14,7 @@
       </select>
 
       <input id="filter-event" type="text" placeholder="Search event..." 
-             class="px-4 py-2.5 bg-gray-800 text-white rounded-xl border border-gray-700 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all flex-1 min-w-[200px]" />
+             class="px-4 py-2.5 bg-gray-800 text-white rounded-xl border border-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all flex-1 min-w-[200px]" />
 
       <button id="filter-clear" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-all hover:scale-105">
         Clear Filters
