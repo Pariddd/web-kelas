@@ -8,7 +8,7 @@
           Gallery Management
         </h2>
         <form id="filter-form" method="GET" class="flex items-center space-x-3">
-          <input type="hidden" name="sort_by" id="sort_by" value="{{ $sortBy ?? 'created_at' }}">
+          <input type="hidden" name="sort_by" id="sort_by" value="{{ $sortBy ?? 'date' }}">
           <input type="hidden" name="sort_dir" id="sort_dir" value="{{ $sortDir ?? 'desc' }}">
           <div class="relative">
             <input
@@ -288,7 +288,7 @@
         }
 
         function toggleSort(column) {
-          const currentBy = "{{ $sortBy ?? 'created_at' }}";
+          const currentBy = "{{ $sortBy ?? 'date' }}";
           const currentDir = "{{ $sortDir ?? 'desc' }}";
           let nextDir = 'asc';
           if (currentBy === column) {

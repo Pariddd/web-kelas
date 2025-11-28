@@ -16,7 +16,7 @@ class GalleryController extends Controller
     {
         $q = (string) $request->query('q', '');
         $event = (string) $request->query('event', '');
-        $sortBy = (string) $request->query('sort_by', 'created_at');
+        $sortBy = (string) $request->query('sort_by', 'date');
         $sortDir = (string) $request->query('sort_dir', 'desc');
         $perPage = (int) $request->query('per_page', 10);
 
@@ -25,9 +25,9 @@ class GalleryController extends Controller
             $perPage = 10;
         }
 
-        $allowedSorts = ['title', 'event', 'created_at'];
+        $allowedSorts = ['title', 'event', 'date'];
         if (! in_array($sortBy, $allowedSorts, true)) {
-            $sortBy = 'created_at';
+            $sortBy = 'date';
         }
 
         $sortDir = strtolower($sortDir) === 'asc' ? 'asc' : 'desc';
