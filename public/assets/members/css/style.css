@@ -200,3 +200,32 @@
 .expanding-nav-item.active span {
     display: none;
 }
+
+.thumbnail-img-mobile {
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#mainImageMobile {
+    transition: opacity 0.15s ease;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+button,
+a,
+img {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+button:active {
+    transform: scale(0.95);
+}

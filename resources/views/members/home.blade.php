@@ -61,41 +61,87 @@
           </div>
         @endforeach
       </div>
-      <div class="grid gap-4 lg:hidden transition duration-1000 scroll-fade-up opacity-0 translate-y-10">
+      <div class="lg:hidden transition duration-1000 scroll-fade-up opacity-0 translate-y-10 px-4 sm:px-6">
         @if($galleries->isEmpty())
-          <div class="w-full h-64 overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center ">
-            <img id="mainImage"
-              class="w-full h-full object-cover"
-              src="https://placehold.co/600x600/EC4899/ffffff?text=Gallery"
-              alt="No gallery">
-          </div>
-
-          <div class="grid grid-cols-5 gap-4">
-            @for($i=0;$i<5;$i++)
-              <div class="overflow-hidden rounded-lg ">
-                <img class="w-full h-20 object-cover"
-                  src="https://placehold.co/300x300/EC4899/ffffff?text=Gallery"
-                  alt="placeholder">
+          <div class="space-y-3">
+            <div class="w-full aspect-3/2 sm:aspect-video overflow-hidden rounded-xl sm:rounded-2xl  shadow-lg">
+              <div class="w-full h-full flex flex-col items-center justify-center text-white p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 mb-3 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p class="text-base sm:text-lg font-semibold">No Gallery Available</p>
+                <p class="text-xs sm:text-sm opacity-80 mt-1">Check back later for updates</p>
               </div>
-            @endfor
+            </div>
+            <div class="grid grid-cols-4 sm:grid-cols-5 gap-2">
+              @for($i=0;$i<5;$i++)
+                <div class="aspect-square overflow-hidden rounded-lg animate-pulse">
+                  <div class="w-full h-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                </div>
+              @endfor
+            </div>
           </div>
         @else
-          <div class="w-full h-64 overflow-hidden rounded-lg bg-gray-100">
-            <img id="mainImage"
-              class="w-full h-full object-cover"
-              src="{{ $galleries[0]->image ? asset('img_item_upload/' . $galleries[0]->image) : 'https://placehold.co/600x600/EC4899/ffffff?text=Gallery' }}"
-              alt="Main Image">
-          </div>
-          <div class="grid grid-cols-5 gap-4">
-            @foreach ($galleries as $index => $gallery)
-              <div class="overflow-hidden rounded-lg">
-                <img
-                  data-index="{{ $index }}"
-                  class="thumbnail-img w-full h-20 object-cover cursor-pointer transition-transform duration-150"
-                  src="{{ $gallery->image ? asset('img_item_upload/' . $gallery->image) : 'https://placehold.co/300x300/EC4899/ffffff?text=Gallery' }}"
-                  alt="Thumbnail {{ $index + 1 }}">
+          <div class="space-y-3">
+            <div class="relative w-full aspect-3/2 sm:aspect-video overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100 shadow-lg">
+              <img id="mainImageMobile"
+                class="w-full h-full object-cover"
+                src="{{ $galleries[0]->image ? asset('img_item_upload/' . $galleries[0]->image) : 'https://placehold.co/800x600/EC4899/ffffff?text=Gallery' }}"
+                alt="Main Gallery Image">
+              <div class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-xs font-semibold shadow-lg">
+                <span id="currentIndexMobile">1</span> / {{ $galleries->count() }}
               </div>
-            @endforeach
+              <button id="prevBtnMobile" class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 bg-white/95 active:bg-white text-gray-800 rounded-full p-2 sm:p-2.5 shadow-lg active:scale-95 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button id="nextBtnMobile" class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 bg-white/95 active:bg-white text-gray-800 rounded-full p-2 sm:p-2.5 shadow-lg active:scale-95 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+              <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 via-black/30 to-transparent p-3 sm:p-4">
+                <h3 id="mainImageTitleMobile" class="text-white font-semibold text-sm sm:text-base drop-shadow-lg line-clamp-1">
+                  {{ $galleries[0]->event ?? 'Gallery Image' }}
+                </h3>
+                <p id="mainImageDateMobile" class="text-white/90 text-xs mt-0.5">
+                  {{ $galleries[0]->date ? \Carbon\Carbon::parse($galleries[0]->date)->format('M d, Y') : '' }}
+                </p>
+              </div>
+            </div>
+            <div class="grid grid-cols-4 sm:grid-cols-5 gap-2">
+              @foreach ($galleries->take(10) as $index => $gallery)
+                <div class="relative aspect-square overflow-hidden rounded-lg shadow-md active:scale-95 transition-transform">
+                  <img
+                    data-index="{{ $index }}"
+                    data-src="{{ $gallery->image ? asset('img_item_upload/' . $gallery->image) : 'https://placehold.co/400x400/EC4899/ffffff?text=Gallery' }}"
+                    data-title="{{ e($gallery->event) }}"
+                    data-date="{{ $gallery->date ? \Carbon\Carbon::parse($gallery->date)->format('M d, Y') : '' }}"
+                    class="thumbnail-img-mobile w-full h-full object-cover cursor-pointer {{ $index === 0 ? 'ring-2 ring-blue-500' : '' }}"
+                    src="{{ $gallery->image ? asset('img_item_upload/' . $gallery->image) : 'https://placehold.co/400x400/EC4899/ffffff?text=Gallery' }}"
+                    alt="Thumbnail {{ $index + 1 }}">
+                  @if($index === 0)
+                    <div class="thumbnail-active-mobile absolute inset-0 bg-blue-500/20 pointer-events-none border-2 border-blue-500"></div>
+                  @else
+                    <div class="thumbnail-active-mobile absolute inset-0 bg-blue-500/20 pointer-events-none border-2 border-blue-500 hidden"></div>
+                  @endif
+                </div>
+              @endforeach
+              @if($galleries->count() > 10)
+                <a href="{{ route('gallery.index') }}" 
+                  class="aspect-square overflow-hidden rounded-lg shadow-md active:scale-95 transition-transform flex flex-col items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span class="text-[10px] sm:text-xs font-semibold">+{{ $galleries->count() - 10 }}</span>
+                </a>
+              @endif
+            </div>
           </div>
         @endif
       </div>
@@ -145,7 +191,7 @@
             <span class="absolute bottom-0 left-0 w-full h-1 bg-[#60a5fa] z-0"></span>
           </span>
         </h2>
-        <div class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           @foreach ($members as $member)
             <div
               class="card-container relative group rounded-xl overflow-hidden hover:scale-105 opacity-0 translate-y-6 transition-all duration-700"
@@ -166,4 +212,7 @@
         </div>
       </section>
       
+      
+   <script src="{{ asset('assets/members/js/animation.js') }}"></script>
+   <script src="{{ asset('assets/members/js/thumbnails.js') }}"></script>
 @endsection
