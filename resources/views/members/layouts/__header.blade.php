@@ -13,5 +13,6 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{{ asset('assets/members/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/members/css/home.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/members/css/gallery.css') }}" />
   </head>

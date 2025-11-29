@@ -173,201 +173,189 @@
   </div>
 </div>
 
-<style>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-.masonry-card {
-  page-break-inside: avoid;
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-}
-</style>
+<script src="{{ asset('assets/members/js/alert.js') }}"></script>
+<script src="{{ asset('assets/members/js/dowloadImg.js') }}"></script>
+<script src="{{ asset('assets/members/js/copyImgLink.js') }}"></script>
+<script src="{{ asset('assets/members/js/sanitizeFileName.js') }}"></script>
+<script src="{{ asset('assets/members/js/modal.js') }}"></script>
+<script src="{{ asset('assets/members/js/share.js') }}"></script>
 
 <script>
-function showToast(message, type = 'success') {
-  const toast = document.createElement('div');
-  toast.className = `fixed top-4 right-4 z-[60] px-6 py-3 rounded-lg shadow-2xl transform transition-all duration-300 translate-x-0 ${
-    type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600'
-  } text-white font-medium flex items-center gap-2`;
+// function showToast(message, type = 'success') {
+//   const toast = document.createElement('div');
+//   toast.className = `fixed top-4 right-4 z-[60] px-6 py-3 rounded-lg shadow-2xl transform transition-all duration-300 translate-x-0 ${
+//     type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+//   } text-white font-medium flex items-center gap-2`;
   
-  const icon = type === 'success' 
-    ? '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
-    : type === 'error'
-    ? '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
-    : '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+//   const icon = type === 'success' 
+//     ? '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
+//     : type === 'error'
+//     ? '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
+//     : '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
   
-  toast.innerHTML = icon + `<span>${message}</span>`;
-  document.body.appendChild(toast);
+//   toast.innerHTML = icon + `<span>${message}</span>`;
+//   document.body.appendChild(toast);
   
-  setTimeout(() => toast.classList.add('translate-x-full', 'opacity-0'), 3000);
-  setTimeout(() => toast.remove(), 3500);
-}
+//   setTimeout(() => toast.classList.add('translate-x-full', 'opacity-0'), 3000);
+//   setTimeout(() => toast.remove(), 3500);
+// }
 
-async function downloadImageQuick(imageUrl, title) {
-  try {
-    showToast('Downloading image...', 'info');
+// async function downloadImageQuick(imageUrl, title) {
+//   try {
+//     showToast('Downloading image...', 'info');
     
-    const response = await fetch(imageUrl);
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
+//     const response = await fetch(imageUrl);
+//     const blob = await response.blob();
+//     const url = window.URL.createObjectURL(blob);
     
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = sanitizeFilename(title) + '.jpg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+//     const link = document.createElement('a');
+//     link.href = url;
+//     link.download = sanitizeFilename(title) + '.jpg';
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+//     window.URL.revokeObjectURL(url);
     
-    showToast('Image downloaded successfully!', 'success');
-  } catch (error) {
-    console.error('Download error:', error);
-    showToast('Failed to download image', 'error');
-  }
-}
+//     showToast('Image downloaded successfully!', 'success');
+//   } catch (error) {
+//     console.error('Download error:', error);
+//     showToast('Failed to download image', 'error');
+//   }
+// }
 
-async function shareImageQuick(imageUrl, title) {
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: title,
-        text: `Check out this image: ${title}`,
-        url: imageUrl
-      });
-      showToast('Shared successfully!', 'success');
-    } catch (error) {
-      if (error.name !== 'AbortError') {
-        console.error('Share error:', error);
-        // Fallback ke copy link
-        copyImageLink(imageUrl);
-      }
-    }
-  } else {
-    copyImageLink(imageUrl);
-  }
-}
+// async function shareImageQuick(imageUrl, title) {
+//   if (navigator.share) {
+//     try {
+//       await navigator.share({
+//         title: title,
+//         text: `Check out this image: ${title}`,
+//         url: imageUrl
+//       });
+//       showToast('Shared successfully!', 'success');
+//     } catch (error) {
+//       if (error.name !== 'AbortError') {
+//         console.error('Share error:', error);
+//         // Fallback ke copy link
+//         copyImageLink(imageUrl);
+//       }
+//     }
+//   } else {
+//     copyImageLink(imageUrl);
+//   }
+// }
 
-function copyImageLink(imageUrl) {
-  navigator.clipboard.writeText(imageUrl).then(() => {
-    showToast('Image link copied to clipboard!', 'success');
-  }).catch(err => {
-    console.error('Copy error:', err);
-    showToast('Failed to copy link', 'error');
-  });
-}
+// function copyImageLink(imageUrl) {
+//   navigator.clipboard.writeText(imageUrl).then(() => {
+//     showToast('Image link copied to clipboard!', 'success');
+//   }).catch(err => {
+//     console.error('Copy error:', err);
+//     showToast('Failed to copy link', 'error');
+//   });
+// }
 
-function sanitizeFilename(filename) {
-  return filename.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-}
+// function sanitizeFilename(filename) {
+//   return filename.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+// }
 
-let currentImageSrc = '';
-let currentImageTitle = '';
+// let currentImageSrc = '';
+// let currentImageTitle = '';
 
-function openModal(imageSrc, title) {
-  const modal = document.getElementById('imageModal');
-  const modalImage = document.getElementById('modalImage');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalBackdrop = document.getElementById('modalBackdrop');
-  const modalContent = document.getElementById('modalContent');
+// function openModal(imageSrc, title) {
+//   const modal = document.getElementById('imageModal');
+//   const modalImage = document.getElementById('modalImage');
+//   const modalTitle = document.getElementById('modalTitle');
+//   const modalBackdrop = document.getElementById('modalBackdrop');
+//   const modalContent = document.getElementById('modalContent');
   
-  currentImageSrc = imageSrc;
-  currentImageTitle = title;
+//   currentImageSrc = imageSrc;
+//   currentImageTitle = title;
   
-  modalImage.src = imageSrc;
-  modalImage.alt = title;
-  modalTitle.textContent = title;
+//   modalImage.src = imageSrc;
+//   modalImage.alt = title;
+//   modalTitle.textContent = title;
   
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-  document.body.style.overflow = 'hidden';
+//   modal.classList.remove('hidden');
+//   modal.classList.add('flex');
+//   document.body.style.overflow = 'hidden';
   
-  setTimeout(() => {
-    modalBackdrop.classList.remove('opacity-0');
-    modalBackdrop.classList.add('opacity-100');
-    modalContent.classList.remove('scale-95', 'opacity-0');
-    modalContent.classList.add('scale-100', 'opacity-100');
-  }, 10);
-}
+//   setTimeout(() => {
+//     modalBackdrop.classList.remove('opacity-0');
+//     modalBackdrop.classList.add('opacity-100');
+//     modalContent.classList.remove('scale-95', 'opacity-0');
+//     modalContent.classList.add('scale-100', 'opacity-100');
+//   }, 10);
+// }
 
-function closeModal() {
-  const modal = document.getElementById('imageModal');
-  const modalBackdrop = document.getElementById('modalBackdrop');
-  const modalContent = document.getElementById('modalContent');
+// function closeModal() {
+//   const modal = document.getElementById('imageModal');
+//   const modalBackdrop = document.getElementById('modalBackdrop');
+//   const modalContent = document.getElementById('modalContent');
   
-  modalBackdrop.classList.remove('opacity-100');
-  modalBackdrop.classList.add('opacity-0');
-  modalContent.classList.remove('scale-100', 'opacity-100');
-  modalContent.classList.add('scale-95', 'opacity-0');
+//   modalBackdrop.classList.remove('opacity-100');
+//   modalBackdrop.classList.add('opacity-0');
+//   modalContent.classList.remove('scale-100', 'opacity-100');
+//   modalContent.classList.add('scale-95', 'opacity-0');
   
-  setTimeout(() => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = '';
-  }, 300);
-}
+//   setTimeout(() => {
+//     modal.classList.add('hidden');
+//     modal.classList.remove('flex');
+//     document.body.style.overflow = '';
+//   }, 300);
+// }
 
-async function downloadImage() {
-  try {
-    showToast('Downloading image...', 'info');
+// async function downloadImage() {
+//   try {
+//     showToast('Downloading image...', 'info');
     
-    const response = await fetch(currentImageSrc);
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
+//     const response = await fetch(currentImageSrc);
+//     const blob = await response.blob();
+//     const url = window.URL.createObjectURL(blob);
     
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = sanitizeFilename(currentImageTitle) + '.jpg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+//     const link = document.createElement('a');
+//     link.href = url;
+//     link.download = sanitizeFilename(currentImageTitle) + '.jpg';
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+//     window.URL.revokeObjectURL(url);
     
-    showToast('Image downloaded successfully!', 'success');
-  } catch (error) {
-    console.error('Download error:', error);
-    showToast('Failed to download image', 'error');
-  }
-}
+//     showToast('Image downloaded successfully!', 'success');
+//   } catch (error) {
+//     console.error('Download error:', error);
+//     showToast('Failed to download image', 'error');
+//   }
+// }
 
-async function shareImage() {
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: currentImageTitle,
-        text: `Check out this image: ${currentImageTitle}`,
-        url: currentImageSrc
-      });
-      showToast('Shared successfully!', 'success');
-    } catch (error) {
-      if (error.name !== 'AbortError') {
-        console.error('Share error:', error);
-        copyImageLink(currentImageSrc);
-      }
-    }
-  } else {
-    navigator.clipboard.writeText(currentImageSrc).then(() => {
-      showToast('Image link copied to clipboard!', 'success');
-    }).catch(err => {
-      console.error('Copy error:', err);
-      showToast('Failed to copy link', 'error');
-    });
-  }
-}
+// async function shareImage() {
+//   if (navigator.share) {
+//     try {
+//       await navigator.share({
+//         title: currentImageTitle,
+//         text: `Check out this image: ${currentImageTitle}`,
+//         url: currentImageSrc
+//       });
+//       showToast('Shared successfully!', 'success');
+//     } catch (error) {
+//       if (error.name !== 'AbortError') {
+//         console.error('Share error:', error);
+//         copyImageLink(currentImageSrc);
+//       }
+//     }
+//   } else {
+//     navigator.clipboard.writeText(currentImageSrc).then(() => {
+//       showToast('Image link copied to clipboard!', 'success');
+//     }).catch(err => {
+//       console.error('Copy error:', err);
+//       showToast('Failed to copy link', 'error');
+//     });
+//   }
+// }
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeModal();
-  }
-});
+// document.addEventListener('keydown', (e) => {
+//   if (e.key === 'Escape') {
+//     closeModal();
+//   }
+// });
 
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('masonry-grid');
